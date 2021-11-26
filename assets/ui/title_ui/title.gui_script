@@ -1,0 +1,66 @@
+local DefEvent = require "DefUtil.DefEvent.DefEvent"
+local DefUI = require "DefUtil.DefUI.DefUI"
+local ui = require "assets.ui.title_ui.title"
+local rendercam= require "rendercam.rendercam"
+local PROXY = "main:/scene_proxy"
+function gamestart(self)
+	if not gui.is_enabled(self.box_node["setting_window"].id) then
+		msg.post(PROXY, "change_scene",{next="#ingame"})
+	end
+end
+function gamesetting(self)
+	self.box_node["setting_window"]:show()
+end
+function setting_exit(self)
+	self.box_node["setting_window"]:hide()
+end
+function exit(self)
+	if not gui.is_enabled(self.box_node["setting_window"].id) then
+		os.exit()
+	end
+end
+function hover(self,action)
+	if self.box_node["start_btn"]:pick_node(action.x,action.y) then
+		self.text_node["start_text"]:set_color(vmath.vector3(1,0,0,1))
+	else
+		self.text_node["start_text"]:set_color(vmath.vector3(0,0,0,1))
+	end	
+	if self.box_node["setting_btn"]:pick_node(action.x,action.y) then
+		self.text_node["setting_text"]:set_color(vmath.vector3(1,0,0,1))
+	else
+		self.text_node["setting_text"]:set_color(vmath.vector3(0,0,0,1))
+	end	
+	if self.box_node["exit_btn"]:pick_node(action.x,action.y) then
+		self.text_node["exit_text"]:set_color(vmath.vector3(1,0,0,1))
+	else
+		self.text_node["exit_text"]:set_color(vmath.vector3(0,0,0,1))
+	end	
+	if self.box_node["setting_window_cross"]:pick_node(action.x,action.y) then
+		self.text_node["cross"]:set_color(vmath.vector3(1,0,0,1))
+	else
+		self.text_node["cross"]:set_color(vmath.vector3(0,0,0,1))
+	end
+end
+
+function init(self)
+	msg.post(".", "acquire_input_focus")
+	self.current_action=nil
+	DefUI.init(self)
+	ui.init(self)
+	self.box_node["setting_window"]:hide()
+	
+	DefUI.create_button(self, "start_btn", self.box_node["start_btn"], {pressed=DefEvent.create("start")})
+	DefUI.create_button(self, "setting_btn", self.box_node["setting_btn"], {pressed=DefEvent.create("setting")})
+	DefUI.create_button(self, "exit_btn", self.box_node["exit_btn"], {pressed=DefEvent.create("exit")})
+	DefUI.create_button(self, "setting_exit_btn", self.box_node["setting_window_cross"], {pressed=DefEvent.create("setting_exit")})
+	
+	DefEvent.register("start", gamestart, {})
+	DefEvent.register("setting", gamesetting, {})
+	DefEvent.register("exit", exit, {})
+	DefEvent.register("setting_exit", setting_exit, {})
+end
+
+function on_input(self, action_id, action)
+	hover(self,action)
+	DefUI.on_input(self, action_id, action)
+end

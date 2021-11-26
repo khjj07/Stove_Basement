@@ -44,6 +44,7 @@ embedded_components {
   "group: \"player\"\n"
   "mask: \"ground\"\n"
   "mask: \"border\"\n"
+  "mask: \"item\"\n"
   "embedded_collision_shape {\n"
   "  shapes {\n"
   "    shape_type: TYPE_BOX\n"

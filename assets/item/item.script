@@ -1,0 +1,14 @@
+function init(self)
+	go.animate(".", "position.y", go.PLAYBACK_LOOP_PINGPONG, go.get_position().y+10, go.EASING_OUTCUBIC, 1)
+end
+
+
+function on_message(self, message_id, message, sender)
+	if message_id==hash("trigger_response") then
+		if message.enter then
+			msg.post(message.other_id, "eat")
+			print("eat")
+			go.delete()
+		end
+	end	
+end
