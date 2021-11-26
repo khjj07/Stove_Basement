@@ -10,8 +10,8 @@ instances {
   rotation {
     x: 0.0
     y: 0.0
-    z: 0.0
-    w: 1.0
+    z: -0.020926794
+    w: 0.999781
   }
   scale3 {
     x: 1.0

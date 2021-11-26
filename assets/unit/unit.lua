@@ -9,7 +9,7 @@ local DIRECTION =
 --모듈 사용법
 --local Unit = require "assets.unit.unit"
 local function apply_normal_force(self,distance,normal)
-	if normal.y>0.7 then
+	if normal.y>0.7 and self.gravity then
 		self.vel=self.vel+vmath.vector3(0,1,0)*vmath.length(self.gravity)
 		self.jumpable=true
 	end
@@ -23,17 +23,20 @@ function U.init(self)
 	--self.gravity = vmath.vector3(0,-10,0)
 end
 
-function U.move(self,direction)
+function U.move(self,direction,speed)
+	speed=speed or self.speed
 	if DIRECTION.left == direction then
-		self.vel.x = -self.speed
+		self.vel.x = -speed
 		sprite.set_hflip("#sprite",true)
 	elseif DIRECTION.right == direction then
-		self.vel.x = self.speed
+		self.vel.x = speed
 		sprite.set_hflip("#sprite", false)
 	elseif DIRECTION.up == direction then
-		self.vel.y = self.speed
+		self.vel.y = speed
 	elseif DIRECTION.down == direction then
-		self.vel.y = -self.speed
+		self.vel.y = -speed
+	else
+		self.vel= self.speed*direction
 	end
 end
 
@@ -47,16 +50,15 @@ function U.update(self,dt)
 	local pos = go.get_position()+self.vel*dt
 	go.set_position(pos)
 	self.vel = self.vel - self.vel*self.friction
-	self.vel=self.vel+self.gravity
+	if self.gravity then
+		self.vel=self.vel+self.gravity
+	end
 end
 
 function U.on_message(self, message_id, message, sender)
 	if message_id==hash("contact_point_response") then
 		apply_normal_force(self,message.distance,message.normal)
 	end
-	if message_id==hash("trigger_response") then
-		
-	end	
 end
 
 return U

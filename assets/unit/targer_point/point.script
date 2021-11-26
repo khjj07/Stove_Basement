@@ -1,0 +1,8 @@
+go.property("next", msg.url())
+function on_message(self, message_id, message, sender)
+	if message_id==hash("trigger_response") then
+		if message.enter then
+			msg.post(message.other_id, "toward",{destination = self.next})
+		end
+	end	
+end

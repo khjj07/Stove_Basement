@@ -1,5 +1,5 @@
 local Unit = require "assets.unit.unit"
-
+local CAM = msg.url("default:/camera")
 go.property("speed", 70) --self.speed=70
 go.property("jumpforce", 400)
 go.property("gravity", vmath.vector3(0,-20,0))
@@ -12,6 +12,7 @@ end
 
 function update(self, dt)
 	Unit.update(self, dt)
+	msg.post(CAM, "update",{vel=self.vel})
 end
 
 function on_message(self, message_id, message, sender)

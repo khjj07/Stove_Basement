@@ -1,0 +1,28 @@
+local Unit = require "assets.unit.unit"
+
+go.property("speed", 70) --self.speed=70
+go.property("gravity", vmath.vector3(0,-10,0))
+go.property("destination", msg.url())
+function init(self)
+	Unit.init(self, dt)
+	self.friction=0.1
+end
+
+function update(self, dt)
+	Unit.update(self, dt)
+	if self.destination and not (self.destination == msg.url()) then
+		local direction = vmath.normalize(go.get_position(self.destination)-go.get_position())
+		if direction.x>0 then
+			Unit.move(self,"right")
+		else
+			Unit.move(self,"left")
+		end
+	end
+end
+
+function on_message(self, message_id, message, sender)
+	Unit.on_message(self, message_id, message, sender)
+	if message_id==hash("toward") then
+		self.destination = message.destination
+	end
+end

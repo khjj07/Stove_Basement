@@ -23,6 +23,7 @@ embedded_components {
   "restitution: 0.5\n"
   "group: \"ground\"\n"
   "mask: \"player\"\n"
+  "mask: \"enemy\"\n"
   "linear_damping: 0.0\n"
   "angular_damping: 0.0\n"
   "locked_rotation: false\n"
