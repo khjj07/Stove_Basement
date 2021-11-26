@@ -1,6 +1,7 @@
 local Unit = require "assets.unit.unit"
 
 go.property("speed", 70) --self.speed=70
+go.property("gravity", vmath.vector3(0,-10,0))
 
 function init(self)
 	Unit.init(self, dt)
