@@ -1,5 +1,5 @@
 animations {
-  id: "IDLE"
+  id: "Idle"
   images {
     image: "/resource/enemy/enemy1_idle.png/0.png"
     sprite_trim_mode: SPRITE_TRIM_MODE_OFF
@@ -14,7 +14,7 @@ animations {
   flip_vertical: 0
 }
 animations {
-  id: "WALK"
+  id: "Walk"
   images {
     image: "/resource/enemy/enemy1_walk.png/0.png"
     sprite_trim_mode: SPRITE_TRIM_MODE_OFF
