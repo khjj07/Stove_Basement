@@ -46,7 +46,7 @@ function U.update(self,dt)
 	self.vel=self.vel+self.gravity
 end
 
-function on_message(self, message_id, message, sender)
+function U.on_message(self, message_id, message, sender)
 	if message_id==hash("contact_point_response") then
 		apply_normal_force(self,message.distance,message.normal)
 	end
