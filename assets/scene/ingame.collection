@@ -136,11 +136,11 @@ collection_instances {
   }
 }
 collection_instances {
-  id: "enemy2"
-  collection: "/assets/unit/enemy2/enemy2.collection"
+  id: "enemy3"
+  collection: "/assets/unit/enemy3/enemy3.collection"
   position {
-    x: -297.0
-    y: -394.0
+    x: -352.0
+    y: -396.0
     z: 0.0
   }
   rotation {

@@ -1,7 +1,7 @@
 local Unit = require "assets.unit.unit"
 local SIGHT = 200
-local RUN = 80
-local WALK = 30
+local RUN = 0
+local WALK = 50
 local rightsideB=vmath.vector3(SIGHT,-10,0)
 local leftsideB=vmath.vector3(-SIGHT,-10,0)
 local rightsideA=vmath.vector3(SIGHT,10,0)
@@ -15,12 +15,14 @@ go.property("destination", msg.url())
 go.property("sight_target_A", msg.url())
 go.property("sight_target_B", msg.url())
 go.property("direction", vmath.vector3(-1,0,0))
+go.property("attack_rate", 1)
 function init(self)
 	Unit.init(self, dt)
 	self.friction=0.1
 	self.sight={}
 	self.tracking=true
-	
+	timer.delay(self.attack_rate, true, function(
+	end)
 end
 function ray(self,from,a,b,num)
 	table.insert(self.sight, {result = physics.raycast(from,(a+b)/2,{ hash("player") }),to=(a+b)/2})
