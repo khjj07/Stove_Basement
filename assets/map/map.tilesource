@@ -78,7 +78,7 @@ convex_hulls {
 convex_hulls {
   index: 80
   count: 4
-  collision_group: ""
+  collision_group: "ground"
 }
 convex_hulls {
   index: 84
