@@ -24,7 +24,7 @@ function on_message(self, message_id, message, sender)
 	Unit.on_message(self, message_id, message, sender)
 	if message_id==hash("eat") then
 		if self.maxhp>self.hp then
-			self.hp=self.hp+1
+			self.hp=self.maxhp
 		end
 	end	
 end
