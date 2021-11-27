@@ -1,19 +1,60 @@
 local Unit = require "assets.unit.unit"
 local CAM = msg.url("default:/camera")
-go.property("speed", 70) --self.speed=70
-go.property("jumpforce", 400)
+local HP_STATE=
+{
+	full=vmath.vector4(1,0,0,0.5),
+	normal=vmath.vector4(1,1,0,0.5),
+	danger=vmath.vector4(0,0,1,0.5)
+}
+local WEAPON=
+{
+	hotpack="#hotpack",
+	coffee="#coffee",
+	strong_hotpack="#strong_hotpack",
+	bread="#bread"
+}
+go.property("speed", 100) --self.speed=70
+go.property("jumpforce", 450)
 go.property("gravity", vmath.vector3(0,-20,0))
 go.property("friction", 0.05)
 go.property("hp", 20)
 go.property("maxhp", 20)
 go.property("hp_decrease_time", 1)
+go.property("attack_delay", 0.8)
 go.property("throw_force", 300)
-go.property("current_projectile", msg.url("#hotpack"))
+go.property("weapon", hash("#bread"))
+go.property("bullet", nil)
+function change_weapon(self,weapon)
+	self.weapon = weapon
+	if weapon == WEAPON.hotpack then
+		self.attack_delay = 0.8
+		self.bullet=nil
+	elseif weapon == WEAPON.coffee then
+		self.attack_delay = 0.8
+		self.bullet=10
+	elseif weapon == WEAPON.strong_hotpack then
+		self.attack_delay = 0.1
+		self.bullet=30
+	elseif weapon == WEAPON.bread then
+		self.attack_delay = 0.8
+		self.bullet=10
+	end
+end
+
 function init(self)
 	Unit.init(self, dt)
-	Unit.init_hp(self)
 	self.throw_dir=vmath.vector3()
 	self.direction=vmath.vector3(1,1,0)
+	self.attackable=true
+	
+	go.set("#hp","scale.x",self.hp/self.maxhp)
+	go.set("#hp", "tint",HP_STATE.full)
+	go.set("#hp_end", "tint",HP_STATE.full)
+	timer.delay(self.hp_decrease_time, true, function()
+		if self.hp>0 then
+			self.hp=self.hp-1
+		end
+	end)
 	msg.post(".", "acquire_input_focus")
 end
 
@@ -21,17 +62,48 @@ function update(self, dt)
 	Unit.animation(self)
 	Unit.update(self, dt)
 	Unit.update_hp(self)
+	if self.hp/self.maxhp<0.5 then
+		go.set("#sprite","tint.x",self.hp/self.maxhp+0.3)
+		go.set("#sprite","tint.y",self.hp/self.maxhp+0.3)
+	else
+		go.set("#sprite","tint.x",1)
+		go.set("#sprite","tint.y",1)
+	end
 	msg.post(CAM, "update",{vel=self.vel})
 	self.throw_dir=self.direction
+	print(self.bullet)
 end
 
 function on_message(self, message_id, message, sender)
 	Unit.on_message(self, message_id, message, sender)
+	if message_id==hash("animation_done") then
+		if message.id==hash("Attack") then
+			msg.post("#sprite", "play_animation",{ id = hash("Idle") })
+			self.current_animation = hash("Idle")
+		end	
+	end
 	if message_id==hash("eat") then
 		if self.maxhp>self.hp then
 			self.hp=self.maxhp
 		end
 	end	
+	if message_id==hash("change_weapon") then
+		if message.type== hash("bread") then
+			change_weapon(self,WEAPON["bread"])
+		elseif message.type== hash("strong_hotpack") then
+			change_weapon(self,WEAPON["strong_hotpack"])
+		elseif message.type== hash("coffee") then
+			change_weapon(self,WEAPON["coffee"])
+		end
+		
+	end	
+	if message_id==hash("hit") then
+		self.vel = (message.direction*200+vmath.vector3(0,200,0))
+		self.hp=self.hp-message.damage
+		if self.hp<=0 then
+			self.hp=0
+		end
+	end
 end
 
 	
@@ -47,11 +119,36 @@ function on_input(self, action_id, action)
 		self.throw_dir=vmath.vector3(1,1,0)
 		self.direction=vmath.vector3(1,1,0)
 	elseif action_id==hash("up") then
-		self.throw_dir=vmath.vector3(0,1,0)
-	elseif action_id==hash("down") then
-		self.throw_dir=vmath.vector3(0,-1,0)
+		self.throw_dir=vmath.vector3(0,2,0)
 	end
+	print(self.throw_dir)
 	if action_id==hash("touch") and action.pressed then 
-		local instance = factory.create(self.current_projectile,go.get_position(),nil,{direction=self.throw_dir,force=self.throw_force})
+		if self.attackable then
+			msg.post("#sprite", "play_animation",{id=hash("Attack")})
+			self.current_animation = hash("Attack")
+			if self.bullet and self.bullet>0 then
+				self.bullet=self.bullet-1
+			else
+				change_weapon(self, WEAPON.hotpack)
+			end
+			if self.weapon == WEAPON.bread then
+				if self.throw_dir==vmath.vector3(0,2,0) then
+					factory.create(self.weapon,go.get_position(),nil,{direction=self.throw_dir,force=self.throw_force})
+					factory.create(self.weapon,go.get_position(),nil,{direction=self.throw_dir+vmath.vector3(0.3,0,0),force=self.throw_force})
+					factory.create(self.weapon,go.get_position(),nil,{direction=self.throw_dir+vmath.vector3(-0.3,0,0),force=self.throw_force})
+				else
+					factory.create(self.weapon,go.get_position(),nil,{direction=self.throw_dir,force=self.throw_force})
+					factory.create(self.weapon,go.get_position(),nil,{direction=self.throw_dir+vmath.vector3(0,0.3,0),force=self.throw_force})
+					factory.create(self.weapon,go.get_position(),nil,{direction=self.throw_dir+vmath.vector3(0,0.6,0),force=self.throw_force})
+				end
+			else
+				factory.create(self.weapon,go.get_position(),nil,{direction=self.throw_dir,force=self.throw_force})
+			end
+			
+			self.attackable=false
+			timer.delay(self.attack_delay, false, function()
+				self.attackable=true
+			end)
+		end
 	end
 end

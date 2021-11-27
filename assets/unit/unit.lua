@@ -10,7 +10,8 @@ local ANIMATION =
 {
 	idle=hash("Idle"),
 	walk=hash("Walk"),
-	jump=hash("Jump")
+	jump=hash("Jump"),
+	attack=hash("Attack")
 }
 local HP_STATE=
 {
@@ -22,26 +23,16 @@ local HP_STATE=
 --local Unit = require "assets.unit.unit"
 function U.update_hp(self)
 	go.set("#hp","scale.x",self.hp/self.maxhp)
-	if self.hp>10 then
+	if self.hp/self.maxhp>0.7  then
 		go.set("#hp", "tint",HP_STATE.full)
 		go.set("#hp_end", "tint",HP_STATE.full)
-	elseif self.hp>5 then
+	elseif self.hp/self.maxhp>0.3 then
 		go.set("#hp", "tint",HP_STATE.normal)
 		go.set("#hp_end", "tint",HP_STATE.normal)
 	else
 		go.set("#hp", "tint",HP_STATE.danger)
 		go.set("#hp_end", "tint",HP_STATE.danger)
 	end
-end
-function U.init_hp(self)
-	go.set("#hp","scale.x",self.hp/self.maxhp)
-	go.set("#hp", "tint",HP_STATE.full)
-	go.set("#hp_end", "tint",HP_STATE.full)
-	timer.delay(self.hp_decrease_time, true, function()
-		if self.hp>0 then
-			self.hp=self.hp-1
-		end
-	end)
 end
 
 local function apply_normal_force(self,distance,normal,relative_velocity)
@@ -70,14 +61,13 @@ function U.init(self)
 end
 
 function U.animation(self)
-	print(math.abs(self.vel.y))
-	if not self.on_ground or math.abs(self.vel.y)>vmath.length(self.gravity)+20 then
+	if ((self.current_animation == ANIMATION.idle or self.current_animation == ANIMATION.walk) and not self.on_ground) or math.abs(self.vel.y)>vmath.length(self.gravity)+20 then
 		msg.post("#sprite", "play_animation",{id=ANIMATION.jump})
 		self.current_animation = ANIMATION.jump
-	elseif self.current_animation ~= ANIMATION.walk and math.abs(self.vel.x)>10 then
+	elseif (self.current_animation == ANIMATION.idle or self.current_animation == ANIMATION.jump) and math.abs(self.vel.x)>10 then
 		msg.post("#sprite", "play_animation",{id=ANIMATION.walk})
 		self.current_animation = ANIMATION.walk
-	elseif self.current_animation ~= ANIMATION.idle and math.abs(self.vel.x)<=10 then
+	elseif (self.current_animation == ANIMATION.walk or self.current_animation == ANIMATION.jump) and math.abs(self.vel.x)<=10 then
 		msg.post("#sprite", "play_animation",{id=ANIMATION.idle})
 		self.current_animation = ANIMATION.idle
 	end

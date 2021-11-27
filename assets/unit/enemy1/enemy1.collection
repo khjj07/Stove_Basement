@@ -2,6 +2,8 @@ name: "default"
 instances {
   id: "enemy1"
   prototype: "/assets/unit/enemy1/enemy1.go"
+  children: "sight_targetA"
+  children: "sight_targetB"
   position {
     x: 0.0
     y: 0.0
@@ -18,6 +20,16 @@ instances {
     properties {
       id: "destination"
       value: "pointB"
+      type: PROPERTY_TYPE_URL
+    }
+    properties {
+      id: "sight_target_A"
+      value: "sight_targetA"
+      type: PROPERTY_TYPE_URL
+    }
+    properties {
+      id: "sight_target_B"
+      value: "sight_targetB"
       type: PROPERTY_TYPE_URL
     }
   }
@@ -84,3 +96,43 @@ instances {
   }
 }
 scale_along_z: 0
+embedded_instances {
+  id: "sight_targetA"
+  data: ""
+  position {
+    x: 30.0
+    y: 10.0
+    z: 0.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale3 {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+}
+embedded_instances {
+  id: "sight_targetB"
+  data: ""
+  position {
+    x: 30.0
+    y: -10.0
+    z: 0.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale3 {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+}

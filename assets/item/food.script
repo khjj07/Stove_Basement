@@ -1,11 +1,13 @@
-go.property("next", msg.url())
 function init(self)
-	print(msg.url())
+	go.animate(".", "position.y", go.PLAYBACK_LOOP_PINGPONG, go.get_position().y+5, go.EASING_LINEAR, 2)
 end
+
+
 function on_message(self, message_id, message, sender)
 	if message_id==hash("trigger_response") then
 		if message.enter then
-			msg.post(message.other_id, "toward",{destination = self.next})
+			msg.post(message.other_id, "eat")
+			go.delete()
 		end
 	end	
 end

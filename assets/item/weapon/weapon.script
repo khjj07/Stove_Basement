@@ -1,4 +1,6 @@
+go.property("weapon_type", hash("strong_hotpack"))
 function init(self)
+	msg.post("#sprite", "play_animation",{id=self.weapon_type})
 	go.animate(".", "position.y", go.PLAYBACK_LOOP_PINGPONG, go.get_position().y+5, go.EASING_LINEAR, 2)
 end
 
@@ -6,8 +8,7 @@ end
 function on_message(self, message_id, message, sender)
 	if message_id==hash("trigger_response") then
 		if message.enter then
-			msg.post(message.other_id, "eat")
-			print("eat")
+			msg.post(message.other_id, "change_weapon",{type=self.weapon_type})
 			go.delete()
 		end
 	end	

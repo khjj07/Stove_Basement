@@ -1,6 +1,6 @@
 components {
   id: "item"
-  component: "/assets/item/item.script"
+  component: "/assets/item/food.script"
   position {
     x: 0.0
     y: 0.0

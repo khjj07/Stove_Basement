@@ -1,28 +1,113 @@
 local Unit = require "assets.unit.unit"
+local rightsideB=vmath.vector3(30,-10,0)
+local leftsideB=vmath.vector3(-30,-10,0)
+local rightsideA=vmath.vector3(30,10,0)
+local leftsideA=vmath.vector3(-30,10,0)
 
-go.property("speed", 70) --self.speed=70
+go.property("hp", 0)
+go.property("maxhp", 3)
+go.property("speed", 30) --self.speed=70
 go.property("gravity", vmath.vector3(0,-10,0))
 go.property("destination", msg.url())
+go.property("sight_target_A", msg.url())
+go.property("sight_target_B", msg.url())
 function init(self)
 	Unit.init(self, dt)
 	self.friction=0.1
+	self.sight={}
+	self.tracking=true
+	self.previous_destination=hash("/enemy1/pointA")
+end
+function ray(self,from,a,b,num)
+	table.insert(self.sight, {result = physics.raycast(from,(a+b)/2,{ hash("player") }),to=(a+b)/2})
+	num=num-1
+	if num>0 then
+		ray(self,from,a,(a+b)/2,num)
+		ray(self,from,b,(a+b)/2,num)
+	end
+end
+local function draw_line(from, to)
+	msg.post("@render:", "draw_line", { start_point = from, end_point = to, color = vmath.vector4(1,0,0,1) })
+end
+function sight(self)
+	local from = go.get_position()
+	local a,b = go.get_world_position(self.sight_target_A),go.get_world_position(self.sight_target_B)
+	self.sight = {}
+	ray(self,from,a,b,3)
+	local catch = nil
+	for i = 1, #self.sight do
+		if self.sight[i].result then
+			draw_line(from, self.sight[i].result.position)
+			return self.sight[i].result.id
+		else
+			draw_line(from, self.sight[i].to)
+		end
+	end	
 end
 
 function update(self, dt)
 	Unit.update(self, dt)
+	Unit.update_hp(self)
+	
+	local catch = sight(self)
+	if not self.previous_destination then
+		if not self.destination==hash("/player")then
+			self.previous_destination = self.destination
+		end
+	end
+	if not self.destination then
+		self.destination=self.previous_destination
+	end
+	if self.tracking and catch then
+		self.speed=70
+		self.destination=catch
+	else
+		self.speed=30
+	end
 	if self.destination and not (self.destination == msg.url()) then
 		local direction = vmath.normalize(go.get_position(self.destination)-go.get_position())
 		if direction.x>0 then
 			Unit.move(self,"right")
+			sprite.set_hflip("#sprite",true)
+			go.set_position(rightsideB,self.sight_target_B)
+			go.set_position(rightsideA,self.sight_target_A)
 		else
 			Unit.move(self,"left")
+			sprite.set_hflip("#sprite",false)
+			go.set_position(leftsideA,self.sight_target_A)
+			go.set_position(leftsideB,self.sight_target_B)
 		end
 	end
+	
+	
 end
 
 function on_message(self, message_id, message, sender)
 	Unit.on_message(self, message_id, message, sender)
 	if message_id==hash("toward") then
 		self.destination = message.destination
+		self.tracking=false
+		timer.delay(1, false, function()
+			self.tracking=true
+		end)
+	end
+	if message_id==hash("trigger_response") then
+		if not message.enter and message.other_group==hash("ground") then
+			self.destination=self.previous_destination
+			print("dd")
+		end
+		if message.other_group==hash("player") then
+			if message.enter then
+				local direction = vmath.normalize(go.get_position(self.destination)-go.get_position())
+				msg.post(message.other_id,"hit",{damage=3,direction=direction})
+				self.destination=self.previous_destination
+			end
+		end	
+	end
+	if message_id==hash("hit") then
+		self.hp=self.hp+message.damage
+		if self.hp >= self.maxhp then
+			self.hp = self.maxhp 
+		end
 	end
 end

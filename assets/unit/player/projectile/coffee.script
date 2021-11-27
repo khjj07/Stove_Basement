@@ -6,15 +6,15 @@ local function apply_normal_force(self,distance,normal)
 	go.set_position(go.get_position()+distance*normal)
 	go.cancel_animations(".", "rotation")
 	msg.post("#hitbox", "disable")
+	msg.post("#collisionobject", "disable")
 	self.vel=self.vel*0.5+normal*vmath.length(self.vel*0.7)
-	timer.delay(1, false, function()
-		go.animate("#sprite", "tint.w", go.PLAYBACK_ONCE_FORWARD, 0, go.EASING_LINEAR, 0.5)
-		timer.delay(1, false, function()
-			go.delete()
-		end)
-	end)
+	msg.post("#defluid", "activate")	-- activate creation of metaballs (fluid)
+	msg.post("#defluid", "forcerandom")
+	--msg.post("/defluid", "dry")
+	msg.post("#sprite", "disable")
 end
 function init(self)
+	math.randomseed(os.time())
 	self.vel=self.force*self.direction
 	go.animate(".", "rotation", go.PLAYBACK_LOOP_FORWARD, vmath.quat_rotation_z(-1.57), go.EASING_LINEAR, 0.1)
 end
@@ -22,7 +22,6 @@ end
 function update(self, dt)
 	local pos=go.get_position()+self.vel*dt
 	go.set_position(pos)
-	
 	self.vel=self.vel+self.gravity
 end
 
@@ -33,5 +32,9 @@ function on_message(self, message_id, message, sender)
 	if message_id==hash("trigger_response") then
 		msg.post(message.other_id,"hit",{damage=self.damage})
 		msg.post("#hitbox", "disable")
+		msg.post("#defluid", "activate")	-- activate creation of metaballs (fluid)
+		msg.post("#defluid", "forcerandom")
+		--msg.post("/defluid", "dry")
+		msg.post("#sprite", "disable")
 	end	
 end
