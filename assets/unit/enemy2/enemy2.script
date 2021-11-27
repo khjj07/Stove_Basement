@@ -1,7 +1,7 @@
 local Unit = require "assets.unit.unit"
-local SIGHT = 200
-local RUN = 80
-local WALK = 30
+local SIGHT = 100
+local RUN = 110
+local WALK = 45
 local rightsideB=vmath.vector3(SIGHT,-10,0)
 local leftsideB=vmath.vector3(-SIGHT,-10,0)
 local rightsideA=vmath.vector3(SIGHT,10,0)
@@ -20,7 +20,7 @@ function init(self)
 	self.friction=0.1
 	self.sight={}
 	self.tracking=true
-	
+
 end
 function ray(self,from,a,b,num)
 	table.insert(self.sight, {result = physics.raycast(from,(a+b)/2,{ hash("player") }),to=(a+b)/2})
@@ -52,7 +52,7 @@ end
 function update(self, dt)
 	Unit.update(self, dt)
 	Unit.update_hp(self)
-	
+
 	local catch = sight(self)
 	if self.tracking and catch then
 		self.speed=RUN

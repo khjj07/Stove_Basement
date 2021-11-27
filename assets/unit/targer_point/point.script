@@ -1,11 +1,9 @@
 go.property("next", msg.url())
-function init(self)
-	print(msg.url())
-end
+go.property("enemy", msg.url())
 function on_message(self, message_id, message, sender)
 	if message_id==hash("trigger_response") then
-		if message.enter then
-			msg.post(message.other_id, "toward",{destination = self.next})
+		if message.enter and message.other_id==self.enemy then
+			msg.post(message.other_id, "toward",{destination = self.next,sender=go.get_id()})
 		end
 	end	
 end
