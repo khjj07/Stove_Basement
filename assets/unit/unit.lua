@@ -37,7 +37,11 @@ end
 
 local function apply_normal_force(self,distance,normal,relative_velocity)
 	go.set_position(go.get_position()+distance*normal)
-	if normal.y>0 then
+	print(normal)
+	if normal.x>0.7 or normal.x<-0.7  then
+		self.contact_wall=true
+		self.vel.x=-self.vel.x
+	elseif normal.y>0.7 then
 		if not self.jumpable then
 			self.vel=self.vel+normal*math.abs(self.vel.y*1.3)
 		else
@@ -56,6 +60,7 @@ function U.init(self)
 	self.jumpable = false
 	self.on_ground = false
 	self.current_animation=ANIMATION.idle
+	self.contact_wall=false
 	--self.friction = 0.1
 	--self.gravity = vmath.vector3(0,-10,0)
 end
@@ -92,7 +97,9 @@ function U.move(self,direction,speed)
 end
 
 function U.jump(self,power)
-	self.vel.y=power
+	if not self.contact_wall then
+		self.vel.y=power
+	end
 	self.on_ground =false
 	--go.animate(".", "vel.y", go.PLAYBACK_ONCE_FORWARD, power, go.EASING_INBACK, 1)
 end
@@ -105,6 +112,7 @@ function U.update(self,dt)
 		self.vel=self.vel+self.gravity
 	end
 	self.jumpable=false
+	self.contact_wall=false
 end
 
 function U.on_message(self, message_id, message, sender)

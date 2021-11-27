@@ -82,6 +82,10 @@ end
 
 function on_message(self, message_id, message, sender)
 	Unit.on_message(self, message_id, message, sender)
+	if self.contact_wall then
+		print(self.contact_wall)
+		self.direction = -self.direction
+	end
 	if message_id==hash("trigger_response") then
 		if not message.enter and message.other_group==hash("ground") then
 			self.destination=nil

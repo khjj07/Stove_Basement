@@ -13,5 +13,9 @@ function G.init(self)
 	self.box_node["setting_window"]=box_node.create(gui.get_node("setting_window"),vmath.vector3(960.,480.,0.),vmath.vector3(0.,0.,0.),vmath.vector3(1.,1.,1.),vmath.vector3(300.,400.,0.),vmath.vector4(0.,0.,0.,0.),vmath.vector4(1.,1.,1.,1.))
 	self.box_node["setting_window_cross"]=box_node.create(gui.get_node("setting_window_cross"),vmath.vector3(127.,176.,0.),vmath.vector3(0.,0.,0.),vmath.vector3(1.,1.,1.),vmath.vector3(30.,30.,0.),vmath.vector4(0.,0.,0.,0.),vmath.vector4(1.,1.,1.,1.))
 	self.text_node["cross"]=text_node.create(gui.get_node("cross"),"X",vmath.vector3(0.,0.,0.),vmath.vector3(0.,0.,0.),vmath.vector3(1.,1.,1.),vmath.vector3(30.,30.,0.),vmath.vector4(0.,0.,0.,1.))
+	self.box_node["BGM_slider_box"]=box_node.create(gui.get_node("BGM_slider_box"),vmath.vector3(20.,50.,0.),vmath.vector3(0.,0.,0.),vmath.vector3(1.,1.,1.),vmath.vector3(200.,40.,0.),vmath.vector4(0.,0.,0.,0.),vmath.vector4(0.701960,0.701960,0.701960,1.))
+	self.box_node["BGM_slider_btn"]=box_node.create(gui.get_node("BGM_slider_btn"),vmath.vector3(0.,0.,0.),vmath.vector3(0.,0.,0.),vmath.vector3(1.,1.,1.),vmath.vector3(30.,30.,0.),vmath.vector4(0.,0.,0.,0.),vmath.vector4(1.,1.,1.,1.))
+	self.box_node["SFX_slider_box"]=box_node.create(gui.get_node("SFX_slider_box"),vmath.vector3(20.,-20.,0.),vmath.vector3(0.,0.,0.),vmath.vector3(1.,1.,1.),vmath.vector3(200.,40.,0.),vmath.vector4(0.,0.,0.,0.),vmath.vector4(0.701960,0.701960,0.701960,1.))
+	self.box_node["SFX_slider_btn"]=box_node.create(gui.get_node("SFX_slider_btn"),vmath.vector3(0.,0.,0.),vmath.vector3(0.,0.,0.),vmath.vector3(1.,1.,1.),vmath.vector3(30.,30.,0.),vmath.vector4(0.,0.,0.,0.),vmath.vector4(1.,1.,1.,1.))
 end
 return G

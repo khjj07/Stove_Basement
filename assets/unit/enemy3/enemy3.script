@@ -90,11 +90,14 @@ function update(self, dt)
 		sprite.set_hflip("#sprite",false)
 		go.set_position(leftsideA,self.sight_target_A)
 		go.set_position(leftsideB,self.sight_target_B)
-	end	
+	end
 end
 
 function on_message(self, message_id, message, sender)
 	Unit.on_message(self, message_id, message, sender)
+	if self.contact_wall then
+		self.direction = -self.direction
+	end
 	if message_id==hash("trigger_response") then
 		if not message.enter and message.other_group==hash("ground") then
 			self.destination=nil

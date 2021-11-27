@@ -15,7 +15,7 @@ input_method = HiddenInputField
 [project]
 title = StoveBasement
 dependencies#0 = https://github.com/rgrams/rendercam/archive/v1.0.1.zip
-dependencies#1 = https://github.com/khjj07/DefUtil/archive/refs/tags/1.15.zip
+dependencies#1 = https://github.com/khjj07/DefUtil/archive/refs/tags/1.17.zip
 dependencies#2 = https://github.com/paweljarosz/defluid
 
 [graphics]
