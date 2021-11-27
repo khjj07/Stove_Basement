@@ -28,5 +28,5 @@ max_contacts = 500
 gravity_y = -40.0
 
 [tilemap]
-max_tile_count = 10000
+max_tile_count = 20000
 

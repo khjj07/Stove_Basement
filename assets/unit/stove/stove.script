@@ -1,0 +1,15 @@
+function init(self)
+	self.hp=0
+end
+
+function on_message(self, message_id, message, sender)
+	if message_id==hash("hit") then
+		if self.hp==3 then
+			msg.post("player", "happy")
+		else
+			self.hp=self.hp+1
+			msg.post("#sprite", "play_animation",{id=hash("stove_attack"..tostring(self.hp))})
+		end
+	end
+	
+end

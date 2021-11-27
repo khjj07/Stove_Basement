@@ -71,8 +71,8 @@ instances {
   id: "weapon"
   prototype: "/assets/item/weapon/weapon.go"
   position {
-    x: -202.0
-    y: -37.0
+    x: 193.0
+    y: -3319.0
     z: 0.0
   }
   rotation {
@@ -85,7 +85,7 @@ instances {
     id: "weapon"
     properties {
       id: "weapon_type"
-      value: "bread"
+      value: "wood"
       type: PROPERTY_TYPE_HASH
     }
   }
@@ -97,7 +97,7 @@ instances {
 }
 instances {
   id: "background"
-  prototype: "/assets/unit/back_ground/background.go"
+  prototype: "/assets/back_ground/background.go"
   position {
     x: 91.0
     y: -1611.0
@@ -139,8 +139,8 @@ instances {
   id: "player"
   prototype: "/assets/unit/player/player.go"
   position {
-    x: -359.0
-    y: -23.0
+    x: 365.0
+    y: -3323.0
     z: 0.0
   }
   rotation {
@@ -162,6 +162,46 @@ instances {
     x: 0.0
     y: 0.0
     z: 0.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale3 {
+    x: 1.0
+    y: 1.0
+    z: 1.0
+  }
+}
+instances {
+  id: "basement"
+  prototype: "/assets/back_ground/basement.go"
+  position {
+    x: 91.0
+    y: -3711.0
+    z: -0.2
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale3 {
+    x: 3.0
+    y: 3.0
+    z: 1.0
+  }
+}
+instances {
+  id: "stove"
+  prototype: "/assets/unit/stove/stove.go"
+  position {
+    x: 536.0
+    y: -3892.0
+    z: 0.1
   }
   rotation {
     x: 0.0

@@ -20,7 +20,7 @@ function init(self)
 	self.friction=0.1
 	self.sight={}
 	self.tracking=true
-
+	self.happy=false
 end
 local function ray(self,from,a,b,num)
 	table.insert(self.sight, {result = physics.raycast(from,(a+b)/2,{ hash("player"),hash("ground") }),to=(a+b)/2})
@@ -53,34 +53,36 @@ function sight(self)
 end
 
 function update(self, dt)
-	Unit.update(self, dt)
-	Unit.update_hp(self)
+	if not self.happy then
+		Unit.update(self, dt)
+		Unit.update_hp(self)
 
-	local catch = sight(self)
-	if self.tracking and catch then
-		self.speed=RUN
-		self.destination=catch
-	else
-		self.speed=WALK
-		self.destination=nil
+		local catch = sight(self)
+		if self.tracking and catch then
+			self.speed=RUN
+			self.destination=catch
+		else
+			self.speed=WALK
+			self.destination=nil
+		end
+		local direction
+		if self.destination then
+			direction = vmath.normalize(go.get_position(self.destination)-go.get_position())
+		else
+			direction=self.direction
+		end
+		if direction.x>0 then
+			Unit.move(self,"right")
+			sprite.set_hflip("#sprite",true)
+			go.set_position(rightsideB,self.sight_target_B)
+			go.set_position(rightsideA,self.sight_target_A)
+		else
+			Unit.move(self,"left")
+			sprite.set_hflip("#sprite",false)
+			go.set_position(leftsideA,self.sight_target_A)
+			go.set_position(leftsideB,self.sight_target_B)
+		end	
 	end
-	local direction
-	if self.destination then
-		direction = vmath.normalize(go.get_position(self.destination)-go.get_position())
-	else
-		direction=self.direction
-	end
-	if direction.x>0 then
-		Unit.move(self,"right")
-		sprite.set_hflip("#sprite",true)
-		go.set_position(rightsideB,self.sight_target_B)
-		go.set_position(rightsideA,self.sight_target_A)
-	else
-		Unit.move(self,"left")
-		sprite.set_hflip("#sprite",false)
-		go.set_position(leftsideA,self.sight_target_A)
-		go.set_position(leftsideB,self.sight_target_B)
-	end	
 end
 
 function on_message(self, message_id, message, sender)
@@ -105,6 +107,14 @@ function on_message(self, message_id, message, sender)
 		self.hp=self.hp+message.damage
 		if self.hp >= self.maxhp then
 			self.hp = self.maxhp 
+		end
+		if self.hp==self.maxhp then
+			msg.post("#sprite", "play_animation",{id=hash("Happy")})
+			self.happy=true
+			msg.post("#collisionobject1", "disable")
+			msg.post("#hp", "disable")
+			msg.post("#hp_back", "disable")
+			msg.post("#hp_end", "disable")
 		end
 		if message.direction then
 			if vmath.normalize(message.direction).x>0 then
