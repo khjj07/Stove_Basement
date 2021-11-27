@@ -3,8 +3,8 @@ local DefUI = require "DefUtil.DefUI.DefUI"
 local ui = require "assets.ui.title_ui.title"
 local rendercam= require "rendercam.rendercam"
 local PROXY = "main:/scene_proxy"
-local GAUGE_MAX=100
-local GAUGE_MIN=-100
+local GAUGE_MAX=90
+local GAUGE_MIN=-90
 function gamestart(self)
 	if not gui.is_enabled(self.box_node["setting_window"].id) then
 		msg.post(PROXY, "change_scene",{next="#ingame"})
@@ -44,15 +44,18 @@ function hover(self,action)
 	end
 end
 
-function setBGM()
-
+function reset()
+	gui.set_position(self.box_node["BGM_slider_btn"].id,0)
+	gui.set_position(self.box_node["SFX_slider_btn"].id,0)
 end
-function setSFX()
-
+function save()
+	self.box_node["setting_window"]:hide()
 end
 function init(self)
 	msg.post(".", "acquire_input_focus")
 	self.current_action=nil
+	self.bgm=50
+	self.sfx=50
 	DefUI.init(self)
 	ui.init(self)
 	self.box_node["setting_window"]:hide()
@@ -61,16 +64,18 @@ function init(self)
 	DefUI.create_button(self, "setting_btn", self.box_node["setting_btn"], {pressed=DefEvent.create("setting")})
 	DefUI.create_button(self, "exit_btn", self.box_node["exit_btn"], {pressed=DefEvent.create("exit")})
 	DefUI.create_button(self, "setting_exit_btn", self.box_node["setting_window_cross"], {pressed=DefEvent.create("setting_exit")})
-	DefUI.create_button(self, "BGM", self.box_node["BGM_slider_btn"], {pressing=DefEvent.create("BGM")})
-	DefUI.create_button(self, "SFX", self.box_node["SFX_slider_btn"], {pressing=DefEvent.create("SFX")})
+	DefUI.create_button(self, "BGM", self.box_node["BGM_slider_btn"], {})
+	DefUI.create_button(self, "SFX", self.box_node["SFX_slider_btn"], {})
+	DefUI.create_button(self, "reset", self.box_node["reset_btn"], {pressed=DefEvent.create("reset")})
+	DefUI.create_button(self, "save", self.box_node["save_btn"], {pressed=DefEvent.create("save")})
 	
 	
 	DefEvent.register("start", gamestart, {})
 	DefEvent.register("setting", gamesetting, {})
 	DefEvent.register("exit", exit, {})
 	DefEvent.register("setting_exit", setting_exit, {})
-	DefEvent.register("BGM", setBGM, {})
-	DefEvent.register("SFX", setSFX, {})
+	DefEvent.register("reset", reset, {})
+	DefEvent.register("save", save, {})
 end
 
 function on_input(self, action_id, action)
@@ -91,6 +96,7 @@ function on_input(self, action_id, action)
 		local pos = self.box_node["BGM_slider_btn"].position
 		pos.x=self.bgm+action_pos.x-self.bgm_pressed.x
 		if pos.x<GAUGE_MAX and pos.x>=GAUGE_MIN then 
+			print(pos.x+90)
 			gui.set_position(self.box_node["BGM_slider_btn"].id,pos)
 		end
 	end 

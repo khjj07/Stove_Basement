@@ -229,7 +229,7 @@ embedded_components {
   }
 }
 embedded_components {
-  id: "fasthotpack"
+  id: "strong_hotpack"
   type: "factory"
   data: "prototype: \"/assets/unit/player/projectile/fast_hotpack.go\"\n"
   "load_dynamically: false\n"
