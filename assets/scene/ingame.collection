@@ -2,7 +2,6 @@ name: "default"
 instances {
   id: "ground"
   prototype: "/assets/map/ground.go"
-  children: "player"
   position {
     x: 0.0
     y: -29.0
