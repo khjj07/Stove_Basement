@@ -7,7 +7,7 @@ go.property("range", 1)
 function init(self)
 	self.vel=self.force*self.direction
 	go.animate(".", "scale", go.PLAYBACK_LOOP_PINGPONG, vmath.vector3(0.8,0.8,1), go.EASING_LINEAR, 0.5)
-	go.animate("#sprite", "tint.w", go.PLAYBACK_ONCE_FORWARD, 0, go.EASING_LINEAR, 2)
+	go.animate("#sprite", "tint.w", go.PLAYBACK_ONCE_FORWARD, 0, go.EASING_LINEAR, 2.7)
 	go.animate(".", "position", go.PLAYBACK_ONCE_FORWARD, go.get_position()+self.direction*self.range, go.EASING_LINEAR, self.duration,0,function()
 		go.delete()
 	end)
