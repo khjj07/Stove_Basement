@@ -16,7 +16,7 @@ components {
 embedded_components {
   id: "sprite"
   type: "sprite"
-  data: "tile_set: \"/assets/unit/enemy1/enemy1.atlas\"\n"
+  data: "tile_set: \"/assets/unit/enemy3/enemy3.atlas\"\n"
   "default_animation: \"Idle\"\n"
   "material: \"/builtins/materials/sprite.material\"\n"
   "blend_mode: BLEND_MODE_ALPHA\n"
@@ -61,8 +61,8 @@ embedded_components {
   "    index: 0\n"
   "    count: 3\n"
   "  }\n"
-  "  data: 10.1025\n"
-  "  data: 9.5035\n"
+  "  data: 9.959\n"
+  "  data: 11.258\n"
   "  data: 10.0\n"
   "}\n"
   "linear_damping: 0.0\n"
@@ -110,8 +110,8 @@ embedded_components {
   "    index: 0\n"
   "    count: 3\n"
   "  }\n"
-  "  data: 10.1025\n"
-  "  data: 9.5035\n"
+  "  data: 9.961\n"
+  "  data: 11.3135\n"
   "  data: 10.0\n"
   "}\n"
   "linear_damping: 0.0\n"
@@ -274,6 +274,24 @@ embedded_components {
   "angular_damping: 0.0\n"
   "locked_rotation: false\n"
   "bullet: false\n"
+  ""
+  position {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+}
+embedded_components {
+  id: "snot"
+  type: "factory"
+  data: "prototype: \"/assets/unit/enemy3/snot.go\"\n"
+  "load_dynamically: false\n"
   ""
   position {
     x: 0.0

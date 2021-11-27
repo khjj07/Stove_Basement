@@ -1,19 +1,15 @@
+images {
+  image: "/resource/enemy/enemy5_snot.png"
+  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
+}
 animations {
   id: "Idle"
   images {
-    image: "/resource/enemy/enemy3_walk.png/0.png"
+    image: "/resource/enemy/enemy5_walk.png/0.png"
     sprite_trim_mode: SPRITE_TRIM_MODE_OFF
   }
   images {
-    image: "/resource/enemy/enemy3_walk.png/1.png"
-    sprite_trim_mode: SPRITE_TRIM_MODE_OFF
-  }
-  images {
-    image: "/resource/enemy/enemy3_walk.png/3.png"
-    sprite_trim_mode: SPRITE_TRIM_MODE_OFF
-  }
-  images {
-    image: "/resource/enemy/enemy3_walk.png/4.png"
+    image: "/resource/enemy/enemy5_walk.png/1.png"
     sprite_trim_mode: SPRITE_TRIM_MODE_OFF
   }
   playback: PLAYBACK_LOOP_FORWARD
@@ -24,23 +20,34 @@ animations {
 animations {
   id: "Walk"
   images {
-    image: "/resource/enemy/enemy3_walk.png/0.png"
+    image: "/resource/enemy/enemy5_walk.png/0.png"
     sprite_trim_mode: SPRITE_TRIM_MODE_OFF
   }
   images {
-    image: "/resource/enemy/enemy3_walk.png/1.png"
-    sprite_trim_mode: SPRITE_TRIM_MODE_OFF
-  }
-  images {
-    image: "/resource/enemy/enemy3_walk.png/3.png"
-    sprite_trim_mode: SPRITE_TRIM_MODE_OFF
-  }
-  images {
-    image: "/resource/enemy/enemy3_walk.png/4.png"
+    image: "/resource/enemy/enemy5_walk.png/1.png"
     sprite_trim_mode: SPRITE_TRIM_MODE_OFF
   }
   playback: PLAYBACK_LOOP_FORWARD
   fps: 4
+  flip_horizontal: 0
+  flip_vertical: 0
+}
+animations {
+  id: "Attack"
+  images {
+    image: "/resource/enemy/enemy5_attack.png/0.png"
+    sprite_trim_mode: SPRITE_TRIM_MODE_OFF
+  }
+  images {
+    image: "/resource/enemy/enemy5_attack.png/1.png"
+    sprite_trim_mode: SPRITE_TRIM_MODE_OFF
+  }
+  images {
+    image: "/resource/enemy/enemy5_attack.png/2.png"
+    sprite_trim_mode: SPRITE_TRIM_MODE_OFF
+  }
+  playback: PLAYBACK_ONCE_FORWARD
+  fps: 3
   flip_horizontal: 0
   flip_vertical: 0
 }

@@ -1,0 +1,23 @@
+go.property("direction", vmath.vector3())
+go.property("force", 0)
+go.property("damage", 1)
+go.property("duration", 1)
+go.property("range", 1)
+
+function init(self)
+	self.vel=self.force*self.direction
+	go.animate(".", "scale", go.PLAYBACK_LOOP_PINGPONG, vmath.vector3(0.8,0.8,1), go.EASING_LINEAR, 0.5)
+	go.animate("#sprite", "tint.w", go.PLAYBACK_ONCE_FORWARD, 0, go.EASING_LINEAR, 2)
+	go.animate(".", "position", go.PLAYBACK_ONCE_FORWARD, go.get_position()+self.direction*self.range, go.EASING_LINEAR, self.duration,0,function()
+		go.delete()
+	end)
+end
+
+
+function on_message(self, message_id, message, sender)
+	if message_id==hash("trigger_response") then
+		msg.post(message.other_id,"hit",{damage=self.damage,direction=self.direction})
+		msg.post("#hitbox", "disable")
+		go.delete()
+	end	
+end

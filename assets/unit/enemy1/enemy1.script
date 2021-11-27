@@ -22,7 +22,7 @@ function init(self)
 	self.tracking=true
 	
 end
-function ray(self,from,a,b,num)
+local function ray(self,from,a,b,num)
 	table.insert(self.sight, {result = physics.raycast(from,(a+b)/2,{ hash("player") }),to=(a+b)/2})
 	num=num-1
 	if num>0 then

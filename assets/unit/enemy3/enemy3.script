@@ -2,10 +2,10 @@ local Unit = require "assets.unit.unit"
 local SIGHT = 200
 local RUN = 0
 local WALK = 50
-local rightsideB=vmath.vector3(SIGHT,-10,0)
-local leftsideB=vmath.vector3(-SIGHT,-10,0)
-local rightsideA=vmath.vector3(SIGHT,10,0)
-local leftsideA=vmath.vector3(-SIGHT,10,0)
+local rightsideB=vmath.vector3(SIGHT,-200,0)
+local leftsideB=vmath.vector3(-SIGHT,-200,0)
+local rightsideA=vmath.vector3(SIGHT,200,0)
+local leftsideA=vmath.vector3(-SIGHT,200,0)
 
 go.property("hp", 0)
 go.property("maxhp", 3)
@@ -15,17 +15,25 @@ go.property("destination", msg.url())
 go.property("sight_target_A", msg.url())
 go.property("sight_target_B", msg.url())
 go.property("direction", vmath.vector3(-1,0,0))
-go.property("attack_rate", 1)
+go.property("attack_rate", 1.3)
 function init(self)
 	Unit.init(self, dt)
 	self.friction=0.1
 	self.sight={}
 	self.tracking=true
-	timer.delay(self.attack_rate, true, function(
+	timer.delay(self.attack_rate, true, function()
+		if self.destination then
+			msg.post("#sprite", "play_animation",{id=hash("Attack")})
+			self.current_animation = hash("Attack")
+		else
+			msg.post("#sprite", "play_animation",{id=hash("Walk")})
+			self.current_animation = hash("Walk")
+		end
+		
 	end)
 end
-function ray(self,from,a,b,num)
-	table.insert(self.sight, {result = physics.raycast(from,(a+b)/2,{ hash("player") }),to=(a+b)/2})
+local function ray(self,from,a,b,num)
+	table.insert(self.sight, {result = physics.raycast(from,(a+b)/2,{ hash("player"),hash("ground") }),to=(a+b)/2})
 	num=num-1
 	if num>0 then
 		ray(self,from,a,(a+b)/2,num)
@@ -39,16 +47,19 @@ function sight(self)
 	local from = go.get_position()
 	local a,b = go.get_world_position(self.sight_target_A),go.get_world_position(self.sight_target_B)
 	self.sight = {}
-	ray(self,from,a,b,3)
+	ray(self,from,a,b,5)
 	local catch = nil
 	for i = 1, #self.sight do
 		if self.sight[i].result then
 			draw_line(from, self.sight[i].result.position)
-			return self.sight[i].result.id
+			if self.sight[i].result.group == hash("player") then
+				catch = self.sight[i].result.id
+			end
 		else
 			draw_line(from, self.sight[i].to)
 		end
 	end	
+	return catch
 end
 
 function update(self, dt)
@@ -96,6 +107,13 @@ function on_message(self, message_id, message, sender)
 				self.destination=nil
 			end
 		end	
+	end
+	if message_id==hash("animation_done") then
+		if self.destination then
+			local direction = vmath.normalize(go.get_position(self.destination)-go.get_position())
+			local rot = vmath.quat_from_to(vmath.vector3(1,0,0), direction)
+			factory.create("#snot",go.get_position(),rot,{direction=direction,duration=3,range=200})
+		end
 	end
 	if message_id==hash("hit") then
 		self.hp=self.hp+message.damage
