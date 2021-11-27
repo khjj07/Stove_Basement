@@ -1,4 +1,3 @@
-local DefEvent = require "DefUtil.DefEvent.DefEvent"
 local DefUI = require "DefUtil.DefUI.DefUI"
 local ui = require "assets.ui.title_ui.title"
 local rendercam= require "rendercam.rendercam"
@@ -105,30 +104,43 @@ function init(self)
 	self.box_node["black"]:hide()
 	self.box_node["setting_window"]:hide()
 	self.printer = printer.new(self, "dialog")
-	DefUI.create_button(self, "start_btn", self.box_node["start_btn"], {pressed=DefEvent.create("start")})
-	DefUI.create_button(self, "setting_btn", self.box_node["setting_btn"], {pressed=DefEvent.create("setting")})
-	DefUI.create_button(self, "exit_btn", self.box_node["exit_btn"], {pressed=DefEvent.create("exit")})
-	DefUI.create_button(self, "setting_exit_btn", self.box_node["setting_window_cross"], {pressed=DefEvent.create("setting_exit")})
+	DefUI.create_button(self, "start_btn", self.box_node["start_btn"], {})
+	DefUI.create_button(self, "setting_btn", self.box_node["setting_btn"], {})
+	DefUI.create_button(self, "exit_btn", self.box_node["exit_btn"], {})
+	DefUI.create_button(self, "setting_exit_btn", self.box_node["setting_window_cross"],{})
 	DefUI.create_button(self, "BGM", self.box_node["BGM_slider_btn"], {})
 	DefUI.create_button(self, "SFX", self.box_node["SFX_slider_btn"], {})
-	DefUI.create_button(self, "reset", self.box_node["reset_btn"], {pressed=DefEvent.create("reset")})
-	DefUI.create_button(self, "save", self.box_node["save_btn"], {pressed=DefEvent.create("save")})
+	DefUI.create_button(self, "reset_btn", self.box_node["reset_btn"], {})
+	DefUI.create_button(self, "save_btn", self.box_node["save_btn"], {})
 	DefUI.create_flow(self, "cutscene")
 	for i=1,9 do
 		self.flow["cutscene"]:add(self.box_node["scene"..tostring(i)])
 	end
 	
-	DefEvent.register("start", gamestart, {})
-	DefEvent.register("setting", gamesetting, {})
-	DefEvent.register("exit", exit, {})
-	DefEvent.register("setting_exit", setting_exit, {})
-	DefEvent.register("reset", reset, {})
-	DefEvent.register("save", save, {})
+
 end
 
 function on_input(self, action_id, action)
 	local action_pos = vmath.vector3(action.screen_x, action.screen_y,0)
-	DefUI.on_input(self, action_id, action)
+
+	if action_id==hash("touch") and action.pressed then
+		if self.button["start_btn"]:pick_node(action.x,action.y) then
+			gamestart(self)
+		elseif self.button["setting_btn"]:pick_node(action.x,action.y)then
+			gamesetting(self)
+		elseif self.button["reset_btn"]:pick_node(action.x,action.y)then
+			reset(self)
+		elseif self.button["save_btn"]:pick_node(action.x,action.y)then
+			save(self)
+		elseif self.button["exit_btn"]:pick_node(action.x,action.y)then
+			exit(self)
+		elseif self.button["setting_exit_btn"]:pick_node(action.x,action.y)then
+			setting_exit(self)
+		
+		end
+	end
+
+	
 	hover(self,action)
 	if action_id==hash("touch") and self.play_scene and action.pressed then
 		if self.flow["cutscene"].index_flag > 8 then

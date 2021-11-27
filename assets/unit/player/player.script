@@ -39,6 +39,11 @@ function change_weapon(self,weapon)
 		self.attack_delay = 0.8
 		self.bullet=10
 	end
+	if not self.bullet then
+		msg.post("ingame", "update_bullet",{bullet="∞"})
+	else
+		msg.post("ingame", "update_bullet",{bullet=tostring(self.bullet)})
+	end
 end
 
 function init(self)
@@ -46,7 +51,7 @@ function init(self)
 	self.throw_dir=vmath.vector3()
 	self.direction=vmath.vector3(1,1,0)
 	self.attackable=true
-	
+	self.hp=10
 	go.set("#hp","scale.x",self.hp/self.maxhp)
 	go.set("#hp", "tint",HP_STATE.full)
 	go.set("#hp_end", "tint",HP_STATE.full)
@@ -62,6 +67,9 @@ function update(self, dt)
 	Unit.animation(self)
 	Unit.update(self, dt)
 	Unit.update_hp(self)
+	if self.hp==0 then
+		msg.post(".", "gameover")
+	end
 	if self.hp/self.maxhp<0.5 then
 		go.set("#sprite","tint.x",self.hp/self.maxhp+0.3)
 		go.set("#sprite","tint.y",self.hp/self.maxhp+0.3)
@@ -76,6 +84,11 @@ end
 
 function on_message(self, message_id, message, sender)
 	Unit.on_message(self, message_id, message, sender)
+	if message_id==hash("gameover") then
+		msg.post("ingame", "gameover")
+		msg.post("#sprite", "play_animation",{id=hash("player_dead")})
+		msg.post(".", "release_input_focus")
+	end
 	if message_id==hash("animation_done") then
 		if message.id==hash("Attack") then
 			msg.post("#sprite", "play_animation",{ id = hash("Idle") })
@@ -128,6 +141,7 @@ function on_input(self, action_id, action)
 			self.current_animation = hash("Attack")
 			if self.bullet and self.bullet>0 then
 				self.bullet=self.bullet-1
+				msg.post("ingame", "update_bullet",{bullet=tostring(self.bullet)})
 			else
 				change_weapon(self, WEAPON.hotpack)
 			end

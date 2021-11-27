@@ -1,0 +1,47 @@
+local ui = require "assets.ui.ingame_ui.ingame"
+local DefUI = require "DefUtil.DefUI.DefUI"
+
+function title(self)
+	if self.over then
+		msg.post("main:/scene_proxy", "reload_scene",{next="#title"})
+	end
+end
+
+function retry(self)
+	print(self.over)
+	if self.over then
+		msg.post("main:/scene_proxy", "reload_scene",{next="#ingame"})
+	end
+end
+
+function init(self)
+	DefUI.init(self)
+	ui.init(self)
+	msg.post(".", "acquire_input_focus")
+	self.over=false
+	
+	self.box_node["gameover_tap"]:hide()
+	DefUI.create_button(self, "retry_btn", self.box_node["retry_btn"], {})
+	DefUI.create_button(self, "title_btn", self.box_node["title_btn"], {})
+	
+end
+function on_message(self, message_id, message, sender)
+	if message_id==hash("update_bullet") then
+		local str = "남은 탄환 : "..message.bullet
+		self.text_node["bullet"]:set_text(str)
+	end
+	if message_id==hash("gameover") then
+		self.over =true
+		self.box_node["gameover_tap"]:show()
+	end	
+end
+function on_input(self, action_id, action)
+	if action_id==hash("touch") then
+		if self.button["retry_btn"]:pick_node(action.x,action.y) and action.pressed then
+			retry(self)
+		elseif self.button["title_btn"]:pick_node(action.x,action.y) and action.pressed then
+			title(self)
+		end
+	end
+	
+end

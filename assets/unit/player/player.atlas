@@ -1,3 +1,7 @@
+images {
+  image: "/resource/player/player_dead.png"
+  sprite_trim_mode: SPRITE_TRIM_MODE_OFF
+}
 animations {
   id: "Idle"
   images {

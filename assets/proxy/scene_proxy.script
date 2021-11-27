@@ -15,6 +15,10 @@ function on_message(self, message_id, message, sender)
 			msg.post(self.current, "load")
 		end
 	end
+	if message_id == hash("reload_scene") then
+		msg.post(self.current, "unload")
+		self.current=message.next
+	end
 	if message_id == hash("change_scene") then
 		msg.post(self.current, "disable")
 		msg.post(self.current, "final")

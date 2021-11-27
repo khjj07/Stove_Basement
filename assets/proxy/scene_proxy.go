@@ -17,7 +17,7 @@ embedded_components {
   id: "ingame"
   type: "collectionproxy"
   data: "collection: \"/assets/scene/ingame.collection\"\n"
-  "exclude: false\n"
+  "exclude: true\n"
   ""
   position {
     x: 0.0
@@ -35,7 +35,7 @@ embedded_components {
   id: "title"
   type: "collectionproxy"
   data: "collection: \"/assets/scene/title.collection\"\n"
-  "exclude: false\n"
+  "exclude: true\n"
   ""
   position {
     x: 0.0
