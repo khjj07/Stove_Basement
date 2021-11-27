@@ -333,13 +333,6 @@ layers {
     v_flip: 0
   }
   cell {
-    x: -21
-    y: -2
-    tile: 25
-    h_flip: 0
-    v_flip: 0
-  }
-  cell {
     x: -20
     y: -2
     tile: 25
@@ -433,12 +426,19 @@ layers {
   cell {
     x: -7
     y: -2
-    tile: 12
+    tile: 25
     h_flip: 0
     v_flip: 0
   }
   cell {
     x: -6
+    y: -2
+    tile: 12
+    h_flip: 0
+    v_flip: 0
+  }
+  cell {
+    x: -5
     y: -2
     tile: 12
     h_flip: 0
