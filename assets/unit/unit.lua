@@ -14,8 +14,8 @@ local ANIMATION =
 }
 local HP_STATE=
 {
-	full=vmath.vector4(0,1,0,0.5),
-	normal=vmath.vector4(1,0,0,0.5),
+	full=vmath.vector4(1,0,0,0.5),
+	normal=vmath.vector4(1,1,0,0.5),
 	danger=vmath.vector4(0,0,1,0.5)
 }
 --모듈 사용법

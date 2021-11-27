@@ -7,9 +7,11 @@ go.property("friction", 0.05)
 go.property("hp", 20)
 go.property("maxhp", 20)
 go.property("hp_decrease_time", 1)
+go.property("throw_force", 100)
 function init(self)
 	Unit.init(self, dt)
 	Unit.init_hp(self)
+	self.throw_dir=vmath.vector3()
 	msg.post(".", "acquire_input_focus")
 end
 
@@ -18,13 +20,14 @@ function update(self, dt)
 	Unit.update(self, dt)
 	Unit.update_hp(self)
 	msg.post(CAM, "update",{vel=self.vel})
+	self.throw_dir=vmath.normalize(self.vel)
 end
 
 function on_message(self, message_id, message, sender)
 	Unit.on_message(self, message_id, message, sender)
 	if message_id==hash("eat") then
 		if self.maxhp>self.hp then
-			self.hp=self.hp+1
+			self.hp=self.maxhp
 		end
 	end	
 end
@@ -35,12 +38,16 @@ function on_input(self, action_id, action)
 		Unit.jump(self, self.jumpforce)
 	elseif action_id ==hash("left") then
 		Unit.move(self, "left")
+		self.throw_dir=vmath.vector3(-1,0,0)
 	elseif action_id ==hash("right") then
 		Unit.move(self, "right")
+		self.throw_dir=vmath.vector3(1,0,0)
+	elseif action_id==hash("up") then
+		self.throw_dir=vmath.vector3(0,1,0)
+	elseif action_id==hash("down") then
+		self.throw_dir=vmath.vector3(0,-1,0)
 	end
-	if action_id==hash("touch") then 
-		
-	end	
-
-	
+	if action_id==hash("touch") and action.pressed then 
+		local instance = factory.create(self.current_projectile,go.get_position(),nil,{direction=self.throw_dir,force=self.throw_force})
+	end
 end
