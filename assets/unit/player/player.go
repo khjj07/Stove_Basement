@@ -144,9 +144,9 @@ embedded_components {
   }
 }
 embedded_components {
-  id: "projectile"
+  id: "hotpack"
   type: "factory"
-  data: "prototype: \"\"\n"
+  data: "prototype: \"/assets/unit/player/projectile/hotpack.go\"\n"
   "load_dynamically: false\n"
   ""
   position {
