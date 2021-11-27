@@ -64,7 +64,7 @@ instances {
   prototype: "/assets/item/item.go"
   position {
     x: -200.0
-    y: -40.0
+    y: -30.0
     z: 0.0
   }
   rotation {

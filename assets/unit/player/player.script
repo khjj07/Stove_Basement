@@ -7,11 +7,13 @@ go.property("friction", 0.05)
 go.property("hp", 20)
 go.property("maxhp", 20)
 go.property("hp_decrease_time", 1)
-go.property("throw_force", 100)
+go.property("throw_force", 300)
+go.property("current_projectile", msg.url("#hotpack"))
 function init(self)
 	Unit.init(self, dt)
 	Unit.init_hp(self)
 	self.throw_dir=vmath.vector3()
+	self.direction=vmath.vector3(1,1,0)
 	msg.post(".", "acquire_input_focus")
 end
 
@@ -20,7 +22,7 @@ function update(self, dt)
 	Unit.update(self, dt)
 	Unit.update_hp(self)
 	msg.post(CAM, "update",{vel=self.vel})
-	self.throw_dir=vmath.normalize(self.vel)
+	self.throw_dir=self.direction
 end
 
 function on_message(self, message_id, message, sender)
@@ -38,10 +40,12 @@ function on_input(self, action_id, action)
 		Unit.jump(self, self.jumpforce)
 	elseif action_id ==hash("left") then
 		Unit.move(self, "left")
-		self.throw_dir=vmath.vector3(-1,0,0)
+		self.throw_dir=vmath.vector3(-1,1,0)
+		self.direction=vmath.vector3(-1,1,0)
 	elseif action_id ==hash("right") then
 		Unit.move(self, "right")
-		self.throw_dir=vmath.vector3(1,0,0)
+		self.throw_dir=vmath.vector3(1,1,0)
+		self.direction=vmath.vector3(1,1,0)
 	elseif action_id==hash("up") then
 		self.throw_dir=vmath.vector3(0,1,0)
 	elseif action_id==hash("down") then
