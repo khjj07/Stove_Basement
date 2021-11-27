@@ -31,7 +31,7 @@ function on_message(self, message_id, message, sender)
 		apply_normal_force(self,message.distance,message.normal)
 	end
 	if message_id==hash("trigger_response") then
-		msg.post(message.other_id,"hit",{damage=self.damage})
+		msg.post(message.other_id,"hit",{damage=self.damage,direction=self.vel})
 		msg.post("#hitbox", "disable")
 	end	
 end

@@ -104,5 +104,12 @@ function on_message(self, message_id, message, sender)
 		if self.hp >= self.maxhp then
 			self.hp = self.maxhp 
 		end
+		if message.direction then
+			if vmath.normalize(message.direction).x>0 then
+				self.direction=vmath.vector3(-1,0,0)
+			else
+				self.direction=vmath.vector3(1,0,0)
+			end
+		end
 	end
 end
