@@ -23,7 +23,7 @@ function init(self)
 
 end
 local function ray(self,from,a,b,num)
-	table.insert(self.sight, {result = physics.raycast(from,(a+b)/2,{ hash("player") }),to=(a+b)/2})
+	table.insert(self.sight, {result = physics.raycast(from,(a+b)/2,{ hash("player"),hash("ground") }),to=(a+b)/2})
 	num=num-1
 	if num>0 then
 		ray(self,from,a,(a+b)/2,num)
@@ -42,11 +42,14 @@ function sight(self)
 	for i = 1, #self.sight do
 		if self.sight[i].result then
 			draw_line(from, self.sight[i].result.position)
-			return self.sight[i].result.id
+			if self.sight[i].result.group == hash("player") then
+				catch = self.sight[i].result.id
+			end
 		else
 			draw_line(from, self.sight[i].to)
 		end
 	end	
+	return catch
 end
 
 function update(self, dt)
