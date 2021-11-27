@@ -14,7 +14,7 @@ components {
   }
   properties {
     id: "orthoScale"
-    value: "0.5"
+    value: "0.4"
     type: PROPERTY_TYPE_NUMBER
   }
 }

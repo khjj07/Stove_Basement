@@ -4,16 +4,19 @@ go.property("speed", 70) --self.speed=70
 go.property("jumpforce", 400)
 go.property("gravity", vmath.vector3(0,-20,0))
 go.property("friction", 0.05)
-go.property("hp", 3)
-go.property("maxhp", 3)
-
+go.property("hp", 20)
+go.property("maxhp", 20)
+go.property("hp_decrease_time", 1)
 function init(self)
 	Unit.init(self, dt)
+	Unit.init_hp(self)
 	msg.post(".", "acquire_input_focus")
 end
 
 function update(self, dt)
+	Unit.animation(self)
 	Unit.update(self, dt)
+	Unit.update_hp(self)
 	msg.post(CAM, "update",{vel=self.vel})
 end
 
@@ -38,5 +41,6 @@ function on_input(self, action_id, action)
 	if action_id==hash("touch") then 
 		
 	end	
+
 	
 end
