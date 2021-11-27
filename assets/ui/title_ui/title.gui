@@ -3,6 +3,10 @@ fonts {
   name: "dungeonmo"
   font: "/assets/font/dungeonmo.font"
 }
+textures {
+  name: "ui"
+  texture: "/assets/ui/ui.atlas"
+}
 background_color {
   x: 0.0
   y: 0.0
@@ -48,7 +52,7 @@ nodes {
   yanchor: YANCHOR_NONE
   pivot: PIVOT_CENTER
   adjust_mode: ADJUST_MODE_FIT
-  layer: ""
+  layer: "layerB"
   inherit_alpha: true
   slice9 {
     x: 0.0
@@ -165,7 +169,7 @@ nodes {
   yanchor: YANCHOR_NONE
   pivot: PIVOT_CENTER
   adjust_mode: ADJUST_MODE_FIT
-  layer: ""
+  layer: "layerB"
   inherit_alpha: true
   slice9 {
     x: 0.0
@@ -282,7 +286,7 @@ nodes {
   yanchor: YANCHOR_NONE
   pivot: PIVOT_CENTER
   adjust_mode: ADJUST_MODE_FIT
-  layer: ""
+  layer: "layerB"
   inherit_alpha: true
   slice9 {
     x: 0.0
@@ -399,7 +403,7 @@ nodes {
   yanchor: YANCHOR_NONE
   pivot: PIVOT_CENTER
   adjust_mode: ADJUST_MODE_FIT
-  layer: ""
+  layer: "layerC"
   inherit_alpha: true
   slice9 {
     x: 0.0
@@ -785,13 +789,13 @@ nodes {
   }
   type: TYPE_BOX
   blend_mode: BLEND_MODE_ALPHA
-  texture: ""
+  texture: "ui/titlelogo"
   id: "title"
   xanchor: XANCHOR_NONE
   yanchor: YANCHOR_NONE
   pivot: PIVOT_SW
   adjust_mode: ADJUST_MODE_FIT
-  layer: ""
+  layer: "layerA"
   inherit_alpha: true
   slice9 {
     x: 0.0
@@ -805,6 +809,15 @@ nodes {
   alpha: 1.0
   template_node_child: false
   size_mode: SIZE_MODE_MANUAL
+}
+layers {
+  name: "layerA"
+}
+layers {
+  name: "layerB"
+}
+layers {
+  name: "layerC"
 }
 material: "/builtins/materials/gui.material"
 adjust_reference: ADJUST_REFERENCE_PARENT
