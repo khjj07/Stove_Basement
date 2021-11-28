@@ -25,7 +25,6 @@ go.property("hp_decrease_time", 1)
 go.property("attack_delay", 0.8)
 go.property("throw_force", 300)
 go.property("weapon", hash("#bread"))
-go.property("bullet", nil)
 function change_weapon(self,weapon)
 	self.weapon = weapon
 	if weapon == WEAPON.wood then
@@ -56,6 +55,7 @@ function init(self)
 	self.throw_dir=vmath.vector3()
 	self.direction=vmath.vector3(1,1,0)
 	self.attackable=true
+	self.bullet=nil
 	sound.play("#start")
 	sound.play("#stage_music")
 	change_weapon(self, WEAPON.hotpack)
