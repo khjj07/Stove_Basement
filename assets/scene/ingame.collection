@@ -448,71 +448,11 @@ collection_instances {
   }
 }
 collection_instances {
-  id: "enemy3"
-  collection: "/assets/unit/enemy3/enemy3.collection"
-  position {
-    x: 477.0
-    y: -1528.0
-    z: 0.0
-  }
-  rotation {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-    w: 1.0
-  }
-  scale3 {
-    x: 1.0
-    y: 1.0
-    z: 1.0
-  }
-}
-collection_instances {
   id: "enemy11"
   collection: "/assets/unit/enemy1/enemy1.collection"
   position {
     x: -212.0
     y: -332.0
-    z: 0.0
-  }
-  rotation {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-    w: 1.0
-  }
-  scale3 {
-    x: 1.0
-    y: 1.0
-    z: 1.0
-  }
-}
-collection_instances {
-  id: "enemy12"
-  collection: "/assets/unit/enemy1/enemy1.collection"
-  position {
-    x: 61.0
-    y: -332.0
-    z: 0.0
-  }
-  rotation {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-    w: 1.0
-  }
-  scale3 {
-    x: 1.0
-    y: 1.0
-    z: 1.0
-  }
-}
-collection_instances {
-  id: "enemy13"
-  collection: "/assets/unit/enemy1/enemy1.collection"
-  position {
-    x: 397.0
-    y: -334.0
     z: 0.0
   }
   rotation {
@@ -553,66 +493,6 @@ collection_instances {
   position {
     x: 153.0
     y: -626.0
-    z: 0.0
-  }
-  rotation {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-    w: 1.0
-  }
-  scale3 {
-    x: 1.0
-    y: 1.0
-    z: 1.0
-  }
-}
-collection_instances {
-  id: "enemy21"
-  collection: "/assets/unit/enemy2/enemy2.collection"
-  position {
-    x: 428.0
-    y: -626.0
-    z: 0.0
-  }
-  rotation {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-    w: 1.0
-  }
-  scale3 {
-    x: 1.0
-    y: 1.0
-    z: 1.0
-  }
-}
-collection_instances {
-  id: "enemy16"
-  collection: "/assets/unit/enemy1/enemy1.collection"
-  position {
-    x: -161.0
-    y: -1235.0
-    z: 0.0
-  }
-  rotation {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-    w: 1.0
-  }
-  scale3 {
-    x: 1.0
-    y: 1.0
-    z: 1.0
-  }
-}
-collection_instances {
-  id: "enemy17"
-  collection: "/assets/unit/enemy1/enemy1.collection"
-  position {
-    x: -323.0
-    y: -1235.0
     z: 0.0
   }
   rotation {
@@ -708,26 +588,6 @@ collection_instances {
   }
 }
 collection_instances {
-  id: "enemy32"
-  collection: "/assets/unit/enemy3/enemy3.collection"
-  position {
-    x: 20.0
-    y: -1823.0
-    z: 0.0
-  }
-  rotation {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-    w: 1.0
-  }
-  scale3 {
-    x: 1.0
-    y: 1.0
-    z: 1.0
-  }
-}
-collection_instances {
   id: "enemy33"
   collection: "/assets/unit/enemy3/enemy3.collection"
   position {
@@ -788,46 +648,6 @@ collection_instances {
   }
 }
 collection_instances {
-  id: "enemy112"
-  collection: "/assets/unit/enemy1/enemy1.collection"
-  position {
-    x: -277.0
-    y: -1823.0
-    z: 0.0
-  }
-  rotation {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-    w: 1.0
-  }
-  scale3 {
-    x: 1.0
-    y: 1.0
-    z: 1.0
-  }
-}
-collection_instances {
-  id: "enemy113"
-  collection: "/assets/unit/enemy1/enemy1.collection"
-  position {
-    x: 325.0
-    y: -2136.0
-    z: 0.0
-  }
-  rotation {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-    w: 1.0
-  }
-  scale3 {
-    x: 1.0
-    y: 1.0
-    z: 1.0
-  }
-}
-collection_instances {
   id: "enemy115"
   collection: "/assets/unit/enemy1/enemy1.collection"
   position {
@@ -848,51 +668,11 @@ collection_instances {
   }
 }
 collection_instances {
-  id: "enemy117"
-  collection: "/assets/unit/enemy1/enemy1.collection"
-  position {
-    x: -35.0
-    y: -2137.0
-    z: 0.0
-  }
-  rotation {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-    w: 1.0
-  }
-  scale3 {
-    x: 1.0
-    y: 1.0
-    z: 1.0
-  }
-}
-collection_instances {
   id: "enemy24"
   collection: "/assets/unit/enemy2/enemy2.collection"
   position {
     x: 420.0
     y: -2135.0
-    z: 0.0
-  }
-  rotation {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-    w: 1.0
-  }
-  scale3 {
-    x: 1.0
-    y: 1.0
-    z: 1.0
-  }
-}
-collection_instances {
-  id: "enemy25"
-  collection: "/assets/unit/enemy2/enemy2.collection"
-  position {
-    x: -290.0
-    y: -2431.0
     z: 0.0
   }
   rotation {
@@ -1028,71 +808,11 @@ collection_instances {
   }
 }
 collection_instances {
-  id: "enemy37"
-  collection: "/assets/unit/enemy3/enemy3.collection"
-  position {
-    x: -215.0
-    y: -2788.0
-    z: 0.0
-  }
-  rotation {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-    w: 1.0
-  }
-  scale3 {
-    x: 1.0
-    y: 1.0
-    z: 1.0
-  }
-}
-collection_instances {
   id: "enemy39"
   collection: "/assets/unit/enemy3/enemy3.collection"
   position {
     x: 409.0
     y: -2725.0
-    z: 0.0
-  }
-  rotation {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-    w: 1.0
-  }
-  scale3 {
-    x: 1.0
-    y: 1.0
-    z: 1.0
-  }
-}
-collection_instances {
-  id: "enemy118"
-  collection: "/assets/unit/enemy1/enemy1.collection"
-  position {
-    x: -276.0
-    y: -3335.0
-    z: 0.0
-  }
-  rotation {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-    w: 1.0
-  }
-  scale3 {
-    x: 1.0
-    y: 1.0
-    z: 1.0
-  }
-}
-collection_instances {
-  id: "enemy214"
-  collection: "/assets/unit/enemy2/enemy2.collection"
-  position {
-    x: -129.0
-    y: -3334.0
     z: 0.0
   }
   rotation {
