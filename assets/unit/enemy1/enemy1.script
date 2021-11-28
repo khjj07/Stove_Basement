@@ -41,12 +41,12 @@ function sight(self)
 	local catch = nil
 	for i = 1, #self.sight do
 		if self.sight[i].result then
-			draw_line(from, self.sight[i].result.position)
+			--draw_line(from, self.sight[i].result.position)
 			if self.sight[i].result.group == hash("player") then
 				catch = self.sight[i].result.id
 			end
 		else
-			draw_line(from, self.sight[i].to)
+			--draw_line(from, self.sight[i].to)
 		end
 	end	
 	return catch

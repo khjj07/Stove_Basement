@@ -57,15 +57,21 @@ function on_message(self, message_id, message, sender)
 end
 function on_input(self, action_id, action)
 	if action_id==hash("touch") and not self.ending then
-		if self.button["retry_btn"]:pick_node(action.x,action.y) and action.pressed then
+		
+		if self.over and self.button["retry_btn"]:pick_node(action.x,action.y) and action.pressed then
+			sound.play("#button")
 			retry(self)
-		elseif self.button["title_btn"]:pick_node(action.x,action.y) and action.pressed then
+		elseif self.over and self.button["title_btn"]:pick_node(action.x,action.y) and action.pressed then
+			sound.play("#button")
 			title(self)
-		elseif self.button["retry_btn1"]:pick_node(action.x,action.y) and action.pressed then
+		elseif self.menu and self.button["retry_btn1"]:pick_node(action.x,action.y) and action.pressed then
+			sound.play("#button")
 			pause_retry(self)
-		elseif self.button["title_btn1"]:pick_node(action.x,action.y) and action.pressed then
+		elseif self.menu and self.button["title_btn1"]:pick_node(action.x,action.y) and action.pressed then
+			sound.play("#button")
 			pause_title(self)
-		elseif self.button["resume_btn"]:pick_node(action.x,action.y) and action.pressed then
+		elseif self.menu and self.button["resume_btn"]:pick_node(action.x,action.y) and action.pressed then
+			sound.play("#button")
 			self.box_node["gamepause_menu"]:hide()
 			self.menu=false
 			msg.post(PROXY, "set_time_step", {factor = 1, mode = 0})

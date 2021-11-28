@@ -52,12 +52,12 @@ function sight(self)
 	local catch = nil
 	for i = 1, #self.sight do
 		if self.sight[i].result then
-			draw_line(from, self.sight[i].result.position)
+			--draw_line(from, self.sight[i].result.position)
 			if self.sight[i].result.group == hash("player") then
 				catch = self.sight[i].result.id
 			end
 		else
-			draw_line(from, self.sight[i].to)
+			--draw_line(from, self.sight[i].to)
 		end
 	end	
 	return catch
@@ -118,7 +118,7 @@ function on_message(self, message_id, message, sender)
 		if self.destination then
 			local direction = vmath.normalize(go.get_position(self.destination)-go.get_position())
 			local rot = vmath.quat_from_to(vmath.vector3(1,0,0), direction)
-			factory.create("#snot",go.get_position(),rot,{direction=direction,duration=3,range=200})
+			factory.create("#snot",go.get_position(),rot,{direction=direction,duration=1,range=200})
 		end
 	end
 	if message_id==hash("hit") then

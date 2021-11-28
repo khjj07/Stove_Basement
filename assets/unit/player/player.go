@@ -282,3 +282,187 @@ embedded_components {
     w: 1.0
   }
 }
+embedded_components {
+  id: "attack"
+  type: "sound"
+  data: "sound: \"/resource/sound/attack_sound.wav\"\n"
+  "looping: 0\n"
+  "group: \"SFX\"\n"
+  "gain: 1.0\n"
+  "pan: 0.0\n"
+  "speed: 1.0\n"
+  "loopcount: 0\n"
+  ""
+  position {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+}
+embedded_components {
+  id: "jump"
+  type: "sound"
+  data: "sound: \"/resource/sound/jumpsound.wav\"\n"
+  "looping: 0\n"
+  "group: \"SFX\"\n"
+  "gain: 1.0\n"
+  "pan: 0.0\n"
+  "speed: 1.0\n"
+  "loopcount: 0\n"
+  ""
+  position {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+}
+embedded_components {
+  id: "start"
+  type: "sound"
+  data: "sound: \"/resource/sound/game_start_sound.wav\"\n"
+  "looping: 0\n"
+  "group: \"SFX\"\n"
+  "gain: 1.0\n"
+  "pan: 0.0\n"
+  "speed: 1.0\n"
+  "loopcount: 0\n"
+  ""
+  position {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+}
+embedded_components {
+  id: "hit"
+  type: "sound"
+  data: "sound: \"/resource/sound/hit.wav\"\n"
+  "looping: 0\n"
+  "group: \"SFX\"\n"
+  "gain: 1.0\n"
+  "pan: 0.0\n"
+  "speed: 1.0\n"
+  "loopcount: 0\n"
+  ""
+  position {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+}
+embedded_components {
+  id: "dead"
+  type: "sound"
+  data: "sound: \"/resource/sound/dead_sound.wav\"\n"
+  "looping: 0\n"
+  "group: \"SFX\"\n"
+  "gain: 1.0\n"
+  "pan: 0.0\n"
+  "speed: 1.0\n"
+  "loopcount: 0\n"
+  ""
+  position {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+}
+embedded_components {
+  id: "item"
+  type: "sound"
+  data: "sound: \"/resource/sound/item_sound.wav\"\n"
+  "looping: 0\n"
+  "group: \"SFX\"\n"
+  "gain: 1.0\n"
+  "pan: 0.0\n"
+  "speed: 1.0\n"
+  "loopcount: 0\n"
+  ""
+  position {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+}
+embedded_components {
+  id: "stage_music"
+  type: "sound"
+  data: "sound: \"/resource/sound/stagemusic.wav\"\n"
+  "looping: 0\n"
+  "group: \"BGM\"\n"
+  "gain: 1.0\n"
+  "pan: 0.0\n"
+  "speed: 1.0\n"
+  "loopcount: 0\n"
+  ""
+  position {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+}
+embedded_components {
+  id: "walk"
+  type: "sound"
+  data: "sound: \"/resource/sound/walking_sound.wav\"\n"
+  "looping: 0\n"
+  "group: \"SFX\"\n"
+  "gain: 1.0\n"
+  "pan: 0.0\n"
+  "speed: 1.0\n"
+  "loopcount: 0\n"
+  ""
+  position {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+}

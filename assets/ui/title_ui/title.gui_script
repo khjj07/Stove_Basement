@@ -20,6 +20,8 @@ local GAUGE_MAX=90
 local GAUGE_MIN=-90
 function gamestart(self)
 	if not gui.is_enabled(self.box_node["setting_window"].id) and not self.play_scene then
+		sound.pause("#title_music",true)
+		sound.play("#cutscene_music")
 		self.flow["cutscene"]:enable()
 		self.flow["cutscene"]:change(1)
 		self.printer:print(DIALOG[1])
@@ -91,12 +93,15 @@ function save(self)
 	self.box_node["setting_window"]:hide()
 	self.bgm=self.current_bgm
 	self.sfx=self.current_sfx
+	sound.set_group_gain("BGM", self.bgm/100)
+	sound.set_group_gain("SFX", self.sfx/100)
 end
 function update(self, dt)
 	self.printer:update(dt)
 end
 function init(self)
 	msg.post(".", "acquire_input_focus")
+	sound.play("#title_music")
 	self.current_action=nil
 	self.bgm=50
 	self.sfx=50
@@ -129,18 +134,23 @@ function on_input(self, action_id, action)
 
 	if action_id==hash("touch") and action.pressed then
 		if self.button["start_btn"]:pick_node(action.x,action.y) then
+			sound.play("#button")
 			gamestart(self)
 		elseif self.button["setting_btn"]:pick_node(action.x,action.y)then
+			sound.play("#button")
 			gamesetting(self)
 		elseif self.button["reset_btn"]:pick_node(action.x,action.y)then
+			sound.play("#button")
 			reset(self)
 		elseif self.button["save_btn"]:pick_node(action.x,action.y)then
+			sound.play("#button")
 			save(self)
 		elseif self.button["exit_btn"]:pick_node(action.x,action.y)then
+			sound.play("#button")
 			exit(self)
 		elseif self.button["setting_exit_btn"]:pick_node(action.x,action.y)then
+			sound.play("#button")
 			setting_exit(self)
-		
 		end
 	end
 
@@ -148,6 +158,7 @@ function on_input(self, action_id, action)
 	hover(self,action)
 	if (action_id==hash("touch")or action_id==hash("jump")) and self.play_scene and action.pressed then
 		if self.flow["cutscene"].index_flag > 8 then
+			sound.pause("#cutscene_music",true)
 			msg.post(PROXY, "change_scene",{next="#ingame"})
 		end
 		self.flow["cutscene"].next()
