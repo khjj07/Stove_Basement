@@ -1,16 +1,23 @@
 local ui = require "assets.ui.ingame_ui.ingame"
 local DefUI = require "DefUtil.DefUI.DefUI"
-
+local PROXY="main:/scene_proxy"
 function title(self)
 	if self.over then
-		msg.post("main:/scene_proxy", "reload_scene",{next="#title"})
+		msg.post(PROXY, "reload_scene",{next="#title"})
 	end
 end
-
+function pause_title(self)
+	msg.post(PROXY, "reload_scene",{next="#title"})
+	msg.post(PROXY, "set_time_step", {factor = 1, mode = 1})
+end
+function pause_retry(self)
+	msg.post(PROXY, "reload_scene",{next="#ingame"})
+	msg.post(PROXY, "set_time_step", {factor = 1, mode = 1})
+end
 function retry(self)
 	print(self.over)
 	if self.over then
-		msg.post("main:/scene_proxy", "reload_scene",{next="#ingame"})
+		msg.post(PROXY, "reload_scene",{next="#ingame"})
 	end
 end
 
@@ -19,11 +26,16 @@ function init(self)
 	ui.init(self)
 	msg.post(".", "acquire_input_focus")
 	self.over=false
-	
 	self.box_node["gameover_tap"]:hide()
+	self.box_node["gamepause_menu"]:hide()
+	self.box_node["ending"]:hide()
 	DefUI.create_button(self, "retry_btn", self.box_node["retry_btn"], {})
 	DefUI.create_button(self, "title_btn", self.box_node["title_btn"], {})
-	
+	DefUI.create_button(self, "retry_btn1", self.box_node["retry_btn1"], {})
+	DefUI.create_button(self, "title_btn1", self.box_node["title_btn1"], {})
+	DefUI.create_button(self, "resume_btn", self.box_node["resume_btn"], {})
+	self.ending=false
+	self.menu =false
 end
 function on_message(self, message_id, message, sender)
 	if message_id==hash("update_bullet") then
@@ -34,14 +46,45 @@ function on_message(self, message_id, message, sender)
 		self.over =true
 		self.box_node["gameover_tap"]:show()
 	end	
+	if message_id==hash("ending") then
+		self.ending=true
+		self.box_node["ending"]:show()
+		self.text_node["bullet"]:hide()
+		self.box_node["bullet"]:hide()
+		self.box_node["gameover_tap"]:hide()
+		self.box_node["gamepause_menu"]:hide()
+	end
 end
 function on_input(self, action_id, action)
-	if action_id==hash("touch") then
+	if action_id==hash("touch") and not self.ending then
 		if self.button["retry_btn"]:pick_node(action.x,action.y) and action.pressed then
 			retry(self)
 		elseif self.button["title_btn"]:pick_node(action.x,action.y) and action.pressed then
 			title(self)
+		elseif self.button["retry_btn1"]:pick_node(action.x,action.y) and action.pressed then
+			pause_retry(self)
+		elseif self.button["title_btn1"]:pick_node(action.x,action.y) and action.pressed then
+			pause_title(self)
+		elseif self.button["resume_btn"]:pick_node(action.x,action.y) and action.pressed then
+			self.box_node["gamepause_menu"]:hide()
+			self.menu=false
+			msg.post(PROXY, "set_time_step", {factor = 1, mode = 0})
 		end
 	end
+	if action_id==hash("touch") and self.box_node["ending"]:pick_node(action.x,action.y) and action.pressed and self.ending then
+		msg.post(PROXY, "reload_scene",{next="#title"})
+		msg.post(PROXY, "set_time_step", {factor = 1, mode = 1})
+	end
+	if action_id==hash("menu") and action.pressed then
+		if self.menu then
+			self.box_node["gamepause_menu"]:hide()
+			self.menu=false
+			msg.post(PROXY, "set_time_step", {factor = 1, mode = 0})
+		else
+			self.box_node["gamepause_menu"]:show()
+			self.menu=true
+			msg.post(PROXY, "set_time_step", {factor = 0, mode = 0})
+		end
+	end	
 	
 end

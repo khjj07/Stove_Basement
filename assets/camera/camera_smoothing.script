@@ -15,7 +15,7 @@ function on_message(self, message_id, message, sender)
 	if message_id==hash("ending") then
 		self.ending=true
 		go.animate(".", "position", go.PLAYBACK_ONCE_FORWARD, vmath.vector3(91,-3711,0), go.EASING_INCIRC, 1,0,function()
-			go.animate(".", "position", go.PLAYBACK_ONCE_FORWARD, vmath.vector3(91,0,0), go.EASING_OUTCUBIC, 15,0,function()
+			go.animate(".", "position", go.PLAYBACK_ONCE_FORWARD, vmath.vector3(91,450,0), go.EASING_OUTCUBIC, 15,0,function()
 				msg.post("ingame", "ending")
 			end)
 		end)

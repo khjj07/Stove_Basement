@@ -139,8 +139,8 @@ instances {
   id: "player"
   prototype: "/assets/unit/player/player.go"
   position {
-    x: -304.0
-    y: -14.0
+    x: 379.0
+    y: -3323.0
     z: 0.0
   }
   rotation {
@@ -424,6 +424,26 @@ instances {
   scale3 {
     x: 1.0
     y: 1.0
+    z: 1.0
+  }
+}
+instances {
+  id: "ending"
+  prototype: "/assets/back_ground/ending.go"
+  position {
+    x: 91.0
+    y: 439.0
+    z: -0.7
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale3 {
+    x: 3.0
+    y: 3.0
     z: 1.0
   }
 }

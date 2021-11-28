@@ -84,6 +84,8 @@ function reset(self)
 	gui.set_position(self.box_node["SFX_slider_btn"].id,sfx_pos)
 	self.bgm=50
 	self.sfx=50
+	self.current_bgm=50
+	self.current_sfx=50
 end
 function save(self)
 	self.box_node["setting_window"]:hide()
@@ -144,7 +146,7 @@ function on_input(self, action_id, action)
 
 	
 	hover(self,action)
-	if action_id==hash("touch") and self.play_scene and action.pressed then
+	if (action_id==hash("touch")or action_id==hash("jump")) and self.play_scene and action.pressed then
 		if self.flow["cutscene"].index_flag > 8 then
 			msg.post(PROXY, "change_scene",{next="#ingame"})
 		end
