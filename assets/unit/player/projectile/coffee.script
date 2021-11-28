@@ -12,10 +12,13 @@ local function apply_normal_force(self,distance,normal)
 	msg.post("#defluid", "forcerandom")
 	--msg.post("/defluid", "dry")
 	msg.post("#sprite", "disable")
+	--particlefx.play("#broken")
+	particlefx.stop("#smoke")
 end
 function init(self)
 	math.randomseed(os.time())
 	self.vel=self.force*self.direction
+	particlefx.play("#smoke")
 	go.animate(".", "rotation", go.PLAYBACK_LOOP_FORWARD, vmath.quat_rotation_z(-1.57), go.EASING_LINEAR, 0.1)
 end
 

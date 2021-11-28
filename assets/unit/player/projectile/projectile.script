@@ -2,6 +2,7 @@ go.property("direction", vmath.vector3())
 go.property("force", 0)
 go.property("gravity", vmath.vector3(0,-40,0))
 go.property("damage", 1)
+go.property("particle", msg.url())
 local function apply_normal_force(self,distance,normal)
 	go.set_position(go.get_position()+distance*normal)
 	go.cancel_animations(".", "rotation")
@@ -16,6 +17,7 @@ local function apply_normal_force(self,distance,normal)
 end
 function init(self)
 	self.vel=self.force*self.direction
+	particlefx.play(self.particle)
 	go.animate(".", "rotation", go.PLAYBACK_LOOP_FORWARD, vmath.quat_rotation_z(-1.57), go.EASING_LINEAR, 0.1)
 end
 

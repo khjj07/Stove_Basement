@@ -59,8 +59,23 @@ components {
   }
   properties {
     id: "debug_physics"
-    value: "true"
+    value: "false"
     type: PROPERTY_TYPE_BOOLEAN
+  }
+}
+components {
+  id: "smoke"
+  component: "/assets/unit/player/projectile/smoke.particlefx"
+  position {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
   }
 }
 embedded_components {
