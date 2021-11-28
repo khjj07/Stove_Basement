@@ -30,3 +30,6 @@ gravity_y = -40.0
 [tilemap]
 max_tile_count = 20000
 
+[sprite]
+max_count = 1000
+
